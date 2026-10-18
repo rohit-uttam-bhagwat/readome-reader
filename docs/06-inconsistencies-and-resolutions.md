@@ -109,6 +109,13 @@ Audit of the 9 generated Stitch screens (+ the seed `DESIGN.md`). Each finding h
 | R-11 | Count mismatch 42≠39 | All = Σ chips | Fix sample counts |
 | R-12 | Library Org screen missing | Out of v1 scope | None |
 
-## Next step: applying fixes to Stitch
+## Status of the Stitch designs
 
-The Stitch designs still contain the pre-resolution wording (Readova, old theme names, Audiobooks, dead buttons, no Settings/TTS). I can push these corrections to the Stitch project via the MCP tools (`edit_screens`, `generate_screen_from_text`, `update_design_system`, project rename) — but that modifies your cloud project, so **I'll confirm before doing it**. See the hand-off note from the assistant for the proposed batch.
+**Decision: the Stitch project is left as-is; these docs are the single source of truth.** The R-01…R-12 resolutions above are authoritative and will be applied directly when the Compose UI is built — not back-ported into Stitch.
+
+Why: an attempt to apply the fixes via the Stitch MCP (`edit_screens`) showed that in this `TEXT_TO_UI_PRO` project the tool acts as an **agentic generator**, not an in-place editor — it left the 10 originals unchanged and generated ~17 additional screens (project grew to 27). There is **no `delete_screen` API** (only `delete_project`), so stray screens can only be pruned in the Stitch UI. We chose not to.
+
+**Implications for implementation:**
+- The 10 original Stitch screens still contain the pre-resolution wording (old theme names, Audiobooks shelf, dead `document_scanner`/avatar buttons, `Collections` label, DOCX/MOBI/CBZ in import). **Ignore those**; follow this document.
+- The extra auto-generated Stitch screens (Onboarding, Sign In/Sign Up, Analytics, Insights, etc.) are **not part of the v1 spec** and should be disregarded. A few (Settings & Storage, Audio/TTS, Empty Library State, TOC, In-Book Search, Storage Permission) happen to align with features here and may serve as loose visual reference only.
+- Treat all Stitch output as **visual reference**, never as the behavioral/scope contract. This document is the contract.
